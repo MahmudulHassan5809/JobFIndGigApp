@@ -1,9 +1,10 @@
-const express = require('express')
+const express = require('express');
 const router = express.Router();
-const db = require('../config/database')
-
+const db = require('../config/database');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 //Models
-const Gig = require('../models/Gig')
+const Gig = require('../models/Gig');
 
 //Get Gig List
 router.get('/',(req,res) => {
@@ -83,6 +84,19 @@ router.post('/add',(req,res) => {
 		.catch(err => console.log(err));
 	}
 
+
+});
+
+//Search Gigs
+router.get('/search',(req,res) => {
+	let { term } = req.query;
+	term = term.toLowerCase();
+
+	Gig.findAll({
+		where: { technologies: { [Op.like]: '%' + term + '%' } }
+	})
+	.then(gigs => res.render('gigs',{ gigs }))
+	.catch(err => console.log(err));
 
 });
 
