@@ -26,26 +26,64 @@ router.get('/add',(req,res) => {
 
 //Add a Gig
 router.post('/add',(req,res) => {
-	const data = {
-		title: 'My Title',
-		technologies: 'PHP,Python,JavaScript,NodeKs',
-		budget: '$3600',
-		description: 'My Description',
-		contact_email: 'my@gmail.com'
+	// const data = {
+	// 	title: 'My Title',
+	// 	technologies: 'PHP,Python,JavaScript,NodeKs',
+	// 	budget: '$3600',
+	// 	description: 'My Description',
+	// 	contact_email: 'my@gmail.com'
+	// }
+
+	// let { title,technologies,budget,description,contact_email } =  data;
+
+	let { title,technologies,budget,description,contact_email } =  req.body;
+	console.log(description);
+	let errors = [];
+
+    if (!title) {
+		errors.push({text: 'Please Add a title'});
+	}
+	if (!technologies) {
+		errors.push({text: 'Please Add some technologies'});
+	}
+	if (!description) {
+		errors.push({text: 'Please Add a description'});
+	}
+	if (!contact_email) {
+		errors.push({text: 'Please Add a contact_email'});
 	}
 
-	let { title,technologies,budget,description,contact_email } =  data;
+	//Check For errors
+	if (errors.length > 0) {
+		res.render('add',{
+			errors,
+			title,
+			technologies,
+			budget,
+			description,
+			contact_email
+		});
+	}else{
+		if(!budget){
+			budget = 'Unknown';
+		}else{
+			budget = `$${budget}`;
+		}
 
-	//Insert Into Tabel
-	Gig.create({
-		title,
-		technologies,
-		budget,
-		description,
-		contact_email
-	})
-	.then(gig => res.redirect('/gigs'))
-	.catch(err => console.log(err));
+		technologies = technologies.toLowerCase().replace(/, /g, ',');
+		//Insert Into Tabel
+		Gig.create({
+			title,
+			technologies,
+			budget,
+			description,
+			contact_email
+		})
+		.then(gig => res.redirect('/gigs'))
+		.catch(err => console.log(err));
+	}
+
+
 });
 
 module.exports = router;
