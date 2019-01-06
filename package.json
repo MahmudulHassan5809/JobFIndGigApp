@@ -1,0 +1,19 @@
+{
+  "name": "codegigs",
+  "version": "1.0.0",
+  "description": "Simple Jobs Find App For Coders",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Mahmudul Hassan",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.42.0"
+  }
+}
