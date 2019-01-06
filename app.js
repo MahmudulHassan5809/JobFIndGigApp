@@ -12,6 +12,10 @@ db.authenticate()
 
 const app = express();
 
+//Gig Routes
+app.use('/gigs',require('./routes/gigs'));
+
+
 const PORT = process.env.PORT || 5000
 
 app.get('/',(req,res) => {

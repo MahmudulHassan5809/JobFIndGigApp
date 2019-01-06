@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database')
 
-const Gig = sequelize.define('gig', {
+const Gig = db.define('gig', {
   title: {
     type: Sequelize.STRING
   },
